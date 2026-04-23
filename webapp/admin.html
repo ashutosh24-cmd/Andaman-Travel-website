@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Unfold Andaman</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="navbar">
+    <a href="index.html" class="logo">Unfold <span>Andaman</span></a>
+    <div class="nav-links">
+        <a href="index.html">Back to Site</a>
+        <span style="color:rgba(255,255,255,0.6)">|</span>
+        <span style="color:#fff;font-weight:600;">Admin Panel</span>
+    </div>
+</nav>
+
+<div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="admin-avatar">A</div>
+            <div>
+                <div class="admin-name">Administrator</div>
+                <div class="admin-role">Super Admin</div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" onclick="showTab('dashboard')">
+                <span class="sidebar-icon">&#128202;</span> Dashboard
+            </a>
+            <a href="#" class="sidebar-link" onclick="showTab('bookings')">
+                <span class="sidebar-icon">&#128203;</span> Bookings
+            </a>
+            <a href="#" class="sidebar-link" onclick="showTab('packages')">
+                <span class="sidebar-icon">&#127961;</span> Packages
+            </a>
+            <a href="#" class="sidebar-link" onclick="showTab('users')">
+                <span class="sidebar-icon">&#128101;</span> Users
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+        <!-- Dashboard Tab -->
+        <div class="admin-tab active" id="tab-dashboard">
+            <h1 class="admin-page-title">Dashboard</h1>
+            <div class="stats-cards">
+                <div class="stat-card stat-blue">
+                    <div class="stat-card-icon">&#128203;</div>
+                    <div class="stat-card-num" id="totalBookings">0</div>
+                    <div class="stat-card-label">Total Bookings</div>
+                </div>
+                <div class="stat-card stat-green">
+                    <div class="stat-card-icon">&#128176;</div>
+                    <div class="stat-card-num" id="totalRevenue">&#8377;0</div>
+                    <div class="stat-card-label">Total Revenue</div>
+                </div>
+                <div class="stat-card stat-orange">
+                    <div class="stat-card-icon">&#127961;</div>
+                    <div class="stat-card-num" id="totalPackages">0</div>
+                    <div class="stat-card-label">Active Packages</div>
+                </div>
+                <div class="stat-card stat-purple">
+                    <div class="stat-card-icon">&#128101;</div>
+                    <div class="stat-card-num" id="totalUsers">0</div>
+                    <div class="stat-card-label">Registered Users</div>
+                </div>
+            </div>
+
+            <div class="admin-grid-2">
+                <div class="admin-card">
+                    <h3>Recent Bookings</h3>
+                    <div id="recentBookingsTable">
+                        <p class="empty-state">No bookings yet</p>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <h3>Package Performance</h3>
+                    <div id="packagePerformance">
+                        <div class="perf-bars" id="perfBars"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Tab -->
+        <div class="admin-tab" id="tab-bookings">
+            <div class="admin-tab-header">
+                <h1 class="admin-page-title">Manage Bookings</h1>
+                <div class="admin-search">
+                    <input type="text" id="bookingSearch" placeholder="Search bookings..." oninput="filterBookings()">
+                </div>
+            </div>
+            <div class="admin-card">
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Package</th>
+                                <th>Travel Date</th>
+                                <th>Travelers</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <tr><td colspan="9" class="empty-state">No bookings found</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages Tab -->
+        <div class="admin-tab" id="tab-packages">
+            <div class="admin-tab-header">
+                <h1 class="admin-page-title">Manage Packages</h1>
+                <button class="btn-admin-primary" onclick="openAddPackageModal()">+ Add Package</button>
+            </div>
+            <div class="admin-card">
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Destination</th>
+                                <th>Price</th>
+                                <th>Duration</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="packagesTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div class="admin-tab" id="tab-users">
+            <h1 class="admin-page-title">Registered Users</h1>
+            <div class="admin-card">
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="4" class="empty-state">No registered users yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Add Package Modal -->
+<div class="modal-overlay" id="addPackageModal">
+    <div class="modal" style="max-width:600px;">
+        <div class="booking-form">
+            <button class="modal-close" style="position:absolute;top:1rem;right:1rem;background:var(--border);color:var(--text);" onclick="closeAdminModal()">&times;</button>
+            <h2>Add New Package</h2>
+            <form onsubmit="addPackage(event)">
+                <div class="form-group">
+                    <label>Package Name</label>
+                    <input type="text" id="pkgName" required placeholder="e.g. Andaman Beach Paradise">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <input type="text" id="pkgDest" required placeholder="e.g. Havelock Island">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (per person)</label>
+                        <input type="number" id="pkgPrice" required placeholder="45999">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="pkgDesc" required placeholder="Brief description of the package">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Duration (days)</label>
+                        <input type="number" id="pkgDays" required placeholder="5">
+                    </div>
+                    <div class="form-group">
+                        <label>Hotel Name</label>
+                        <input type="text" id="pkgHotel" required placeholder="Hotel name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Cab Type</label>
+                        <input type="text" id="pkgCab" required placeholder="AC Sedan">
+                    </div>
+                    <div class="form-group">
+                        <label>Tickets</label>
+                        <input type="text" id="pkgTickets" required placeholder="Return flights + Ferry">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Local Tour Info</label>
+                    <input type="text" id="pkgTour" required placeholder="Cellular Jail, Snorkeling...">
+                </div>
+                <button type="submit" class="btn-confirm">Add Package</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
