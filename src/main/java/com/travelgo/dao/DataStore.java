@@ -9,10 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-/**
- * In-memory Data Access Object - simulates a database using collections.
- * Demonstrates OOP concepts: Encapsulation, Singleton Pattern.
- */
+
 public class DataStore {
     private static DataStore instance;
     private final List<TravelPackage> packages;
@@ -105,7 +102,7 @@ public class DataStore {
             "images/monument.jpeg", 4.3));
     }
 
-    // ── Package Methods ──
+    // Package Methods 
     public List<TravelPackage> getAllPackages() {
         return new ArrayList<>(packages);
     }
@@ -123,7 +120,7 @@ public class DataStore {
             .collect(Collectors.toList());
     }
 
-    // ── Booking Methods ──
+    // Booking Method
     public Booking createBooking(Booking booking) {
         booking.setId(bookingIdCounter.getAndIncrement());
         booking.setStatus("CONFIRMED");
@@ -155,7 +152,7 @@ public class DataStore {
         return getBookingsByEmail(user.getEmail());
     }
 
-    // ── User Methods ──
+    // User Methods
     public User registerUser(User user) {
         // Check if email already exists
         if (getUserByEmail(user.getEmail()) != null) {
@@ -207,7 +204,7 @@ public class DataStore {
         return users.removeIf(u -> u.getId() == id && "CUSTOMER".equals(u.getRole()));
     }
 
-    // ── Session Methods ──
+    // Session Methods 
     public String createSession(int userId) {
         String token = UUID.randomUUID().toString();
         sessions.put(token, userId);
